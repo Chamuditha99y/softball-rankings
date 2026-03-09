@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Gampaha Softball</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1><i class="fas fa-cog"></i> ADMIN PANEL</h1>
+            <button onclick="goToDashboard()" class="back-to-dashboard">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalTeams">0</div>
+                <div class="stat-label">Total Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPlayers">0</div>
+                <div class="stat-label">Total Players</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalTournaments">0</div>
+                <div class="stat-label">Tournaments</div>
+            </div>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="openTab('teams')">Teams</button>
+            <button class="tab-btn" onclick="openTab('players')">Players DB</button>
+            <button class="tab-btn" onclick="openTab('batsmen')">Batsmen</button>
+            <button class="tab-btn" onclick="openTab('bowlers')">Bowlers</button>
+            <button class="tab-btn" onclick="openTab('allrounders')">All Rounders</button>
+            <button class="tab-btn" onclick="openTab('wins')">Team Wins</button>
+            <button class="tab-btn" onclick="openTab('achievements')">Achievements</button>
+            <button class="tab-btn" onclick="openTab('social')">Social</button>
+        </div>
+
+        <!-- Teams Tab -->
+        <div id="teamsTab" class="tab-content active">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-users"></i> Manage Teams</h3>
+                    <button onclick="addNewTeam()" class="add-btn">
+                        <i class="fas fa-plus"></i> Add New Team
+                    </button>
+                </div>
+                
+                <!-- Team & Multiple Players Form - FIXED: Now with 2 columns (Reg No + Name only) -->
+                <div class="team-players-form" style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #333;">Add Team & Players</h4>
+                    
+                    <!-- Team Name Input -->
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="newTeamName" class="admin-input" placeholder="Enter Team Name" style="font-weight: bold; border-color: #667eea;">
+                    </div>
+                    
+                    <!-- Multiple Players Input Section -->
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label style="font-weight: bold; color: #333;">Add Players (15-20 players per team)</label>
+                            <button type="button" onclick="addPlayerRow()" class="add-btn-small" style="background: #17a2b8; padding: 5px 10px; border: none; border-radius: 4px; color: white; cursor: pointer;">
+                                <i class="fas fa-plus"></i> Add Another Player
+                            </button>
+                        </div>
+                        
+                        <!-- Player Rows Container - 2 columns (Reg No + Name only) -->
+                        <div id="playersRowsContainer">
+                            <!-- Row 0 -->
+                            <div class="player-row" style="display: grid; grid-template-columns: 100px 1fr 100px; gap: 10px; margin-bottom: 10px; align-items: center;">
+                                <input type="text" class="admin-input" placeholder="Reg No" id="playerReg0" value="" style="background: white;">
+                                <input type="text" class="admin-input" placeholder="Player Name" id="playerName0" value="" style="background: white;">
+                                <button type="button" onclick="removePlayerRow(this)" class="delete-btn-small" style="display: none; background: #dc3545; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <!-- Row 1 -->
+                            <div class="player-row" style="display: grid; grid-template-columns: 100px 1fr 100px; gap: 10px; margin-bottom: 10px; align-items: center;">
+                                <input type="text" class="admin-input" placeholder="Reg No" id="playerReg1" value="" style="background: white;">
+                                <input type="text" class="admin-input" placeholder="Player Name" id="playerName1" value="" style="background: white;">
+                                <button type="button" onclick="removePlayerRow(this)" class="delete-btn-small" style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;"><i class="fas fa-trash"></i></button>
+                            </div>
+                            <!-- Row 2 -->
+                            <div class="player-row" style="display: grid; grid-template-columns: 100px 1fr 100px; gap: 10px; margin-bottom: 10px; align-items: center;">
+                                <input type="text" class="admin-input" placeholder="Reg No" id="playerReg2" value="" style="background: white;">
+                                <input type="text" class="admin-input" placeholder="Player Name" id="playerName2" value="" style="background: white;">
+                                <button type="button" onclick="removePlayerRow(this)" class="delete-btn-small" style="background: #dc3545; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Player Count Info -->
+                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                            <i class="fas fa-info-circle"></i> You can add 15-20 players per team. Minimum 3 players required.
+                        </div>
+                    </div>
+                    
+                    <!-- Create Team Button -->
+                    <button onclick="addTeamAndPlayers()" class="add-btn" style="background: #28a745; width: 100%; padding: 12px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                        <i class="fas fa-save"></i> Create Team with Players
+                    </button>
+                </div>
+
+                <!-- Teams List Table -->
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>TEAM NAME</th>
+                            <th>CHAMPS</th>
+                            <th>RUNNERS UP</th>
+                            <th>CASH TOTAL</th>
+                            <th>POINTS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamsEditTable">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Players DB Tab -->
+        <div id="playersTab" class="tab-content">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-database"></i> Players Database</h3>
+                    <div>
+                        <select id="teamFilterSelect" onchange="filterPlayersByTeam()" style="margin-right: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                            <option value="">All Teams</option>
+                        </select>
+                        <button onclick="addNewPlayer()" class="add-btn">
+                            <i class="fas fa-plus"></i> Add New Player
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search in Players DB -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="playerSearch" class="admin-input" placeholder="Search players..." onkeyup="searchPlayers()">
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Reg No</th>
+                            <th>Player Name</th>
+                            <th>Team</th>
+                            <th>Category</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="playersEditTable">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Batsmen Tab -->
+        <div id="batsmenTab" class="tab-content">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-baseball-bat-ball"></i> Manage Batsmen Rankings</h3>
+                    <button onclick="addNewBatsman()" class="add-btn">
+                        <i class="fas fa-plus"></i> Add to Batsmen
+                    </button>
+                </div>
+                
+                <!-- Search in Batsmen -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="batsmanSearch" class="admin-input" placeholder="Search batsmen..." onkeyup="searchBatsmen()">
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Reg No</th>
+                            <th>Player Name</th>
+                            <th>Team</th>
+                            <th>Awards</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batsmenEditTable">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bowlers Tab -->
+        <div id="bowlersTab" class="tab-content">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-baseball-ball"></i> Manage Bowlers Rankings</h3>
+                    <button onclick="addNewBowler()" class="add-btn">
+                        <i class="fas fa-plus"></i> Add to Bowlers
+                    </button>
+                </div>
+                
+                <!-- Search in Bowlers -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="bowlerSearch" class="admin-input" placeholder="Search bowlers..." onkeyup="searchBowlers()">
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Reg No</th>
+                            <th>Player Name</th>
+                            <th>Team</th>
+                            <th>Awards</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bowlersEditTable">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- All Rounders Tab -->
+        <div id="allroundersTab" class="tab-content">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-star"></i> Manage All Rounders Rankings</h3>
+                    <button onclick="addNewAllrounder()" class="add-btn">
+                        <i class="fas fa-plus"></i> Add to All Rounders
+                    </button>
+                </div>
+                
+                <!-- Search in All Rounders -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="allrounderSearch" class="admin-input" placeholder="Search all rounders..." onkeyup="searchAllrounders()">
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Reg No</th>
+                            <th>Player Name</th>
+                            <th>Team</th>
+                            <th>Awards</th>
+                            <th>Points</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allroundersEditTable">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Team Wins Tab -->
+        <div id="winsTab" class="tab-content">
+            <div class="admin-section">
+                <h3><i class="fas fa-history"></i> Team Tournament Wins</h3>
+                
+                <!-- Search in Team Wins -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="winSearch" class="admin-input" placeholder="Search teams..." onkeyup="searchWins()">
+                </div>
+                
+                <div id="teamWinsEdit"></div>
+            </div>
+        </div>
+
+        <!-- Achievements Tab -->
+        <div id="achievementsTab" class="tab-content">
+            <div class="admin-section">
+                <h3><i class="fas fa-medal"></i> Player Achievements</h3>
+                
+                <select id="playerForAchievement" onchange="loadPlayerAchievements()" style="width: 100%; padding: 10px; margin: 15px 0; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="">Select Player</option>
+                </select>
+                
+                <!-- Search in Achievements -->
+                <div style="margin-bottom: 15px;">
+                    <input type="text" id="achievementSearch" class="admin-input" placeholder="Search achievements..." onkeyup="searchAchievements()">
+                </div>
+                
+                <div id="playerAchievementsEdit"></div>
+                <button onclick="addNewPlayerAchievement()" class="add-btn" style="margin-top: 15px;">
+                    <i class="fas fa-plus"></i> Add New Achievement
+                </button>
+            </div>
+        </div>
+
+        <!-- Social Tab -->
+        <div id="socialTab" class="tab-content">
+            <div class="admin-section">
+                <h3><i class="fas fa-share-alt"></i> Social Media Links</h3>
+                <div style="display: grid; gap: 15px;">
+                    <input type="text" id="facebookLink" class="admin-input" placeholder="Facebook URL">
+                    <input type="text" id="instagramLink" class="admin-input" placeholder="Instagram URL">
+                    <input type="text" id="youtubeLink" class="admin-input" placeholder="YouTube URL">
+                </div>
+            </div>
+        </div>
+
+        <!-- Save and Close Buttons -->
+        <div style="display: flex; gap: 15px; margin-top: 30px;">
+            <button onclick="saveAllChanges()" class="save-btn">
+                <i class="fas fa-save"></i> Save All Changes
+            </button>
+            <button onclick="goToDashboard()" class="cancel-btn">
+                <i class="fas fa-times"></i> Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
