@@ -1,0 +1,18 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "teams"
+    label: "Teams"
+    folder: "_data/teams"
+    create: true
+    fields:
+      - { label: "Team Name", name: "name", widget: "string" }
+      - { label: "Championships", name: "champs", widget: "number" }
+      - { label: "Runners Up", name: "runnersUp", widget: "number" }
+      - { label: "Cash Total", name: "cashTotal", widget: "number" }
+      - { label: "Points", name: "points", widget: "number" }
