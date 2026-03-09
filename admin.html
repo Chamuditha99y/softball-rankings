@@ -11,9 +11,14 @@
     <div class="container">
         <div class="admin-header">
             <h1><i class="fas fa-cog"></i> ADMIN PANEL</h1>
-            <button onclick="goToDashboard()" class="back-to-dashboard">
-                <i class="fas fa-arrow-left"></i> Back to Dashboard
-            </button>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="window.location.href='publish.html'" class="publish-btn" style="background: #ffc107; color: black; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    <i class="fas fa-cloud-upload-alt"></i> Publish to Live
+                </button>
+                <button onclick="goToDashboard()" class="back-to-dashboard">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
         </div>
 
         <!-- Quick Stats -->
