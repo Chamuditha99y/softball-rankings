@@ -3,188 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gampaha District Softball Rankings 2026 - Public View</title>
+    <title>Publish Data - Gampaha Softball</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Hide admin buttons */
-        .top-buttons {
-            display: none !important;
+        .publish-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
         }
-        
-        /* Make sure only public view shows */
-        .admin-only {
-            display: none !important;
+        .publish-title {
+            color: #333;
+            margin-bottom: 20px;
         }
-        
-        /* Optional: Add watermark for public view */
-        .public-watermark {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0.3;
-            font-size: 12px;
-            color: #666;
-            pointer-events: none;
-            z-index: 999;
+        .publish-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+        }
+        .publish-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+        .status-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .step {
+            text-align: left;
+            padding: 10px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .step.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .step i {
+            margin-right: 10px;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🏆 POINT SYSTEM RANKING 2026</h1>
-            <h2>🇱🇰 GAMPAHA DISTRICT</h2>
-        </div>
-        
-        <!-- Public View Only - No Admin Buttons -->
-        
-        <!-- Main Dashboard -->
-        <div id="publicDashboard" class="dashboard">
-            <!-- TOP 10 TEAMS -->
-            <div class="section">
-                <h2><i class="fas fa-trophy"></i> TOP 10 TEAMS</h2>
-                <div class="search-section">
-                    <input type="text" id="teamSearch" placeholder="Type here to search team..." onkeyup="searchTeams()">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                <table id="rankingsTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>TEAM NAME</th>
-                            <th>CHAMPS</th>
-                            <th>RUNNERS UP</th>
-                            <th>CASH TOTAL</th>
-                            <th>POINTS</th>
-                            <th class="rank-change-col">CHANGE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="rankingsBody">
-                        <!-- Filled by JavaScript -->
-                    </tbody>
-                </table>
+        <div class="publish-container">
+            <h1 class="publish-title"><i class="fas fa-cloud-upload-alt"></i> Publish Rankings to Live Site</h1>
+            
+            <div class="info-box">
+                <strong><i class="fas fa-info-circle"></i> How it works:</strong>
+                <p>1. Click the button below to export your current data</p>
+                <p>2. The data will be prepared for GitHub</p>
+                <p>3. Live site will update in 2-3 minutes</p>
             </div>
 
-            <!-- BEST BATSMAN -->
-            <div class="section">
-                <h2><i class="fas fa-baseball-bat-ball"></i> BEST BATSMAN 2026</h2>
-                <div class="search-section">
-                    <input type="text" id="batsmanSearch" placeholder="Type here to search batsman..." onkeyup="searchBatsmen()">
-                    <i class="fas fa-search search-icon"></i>
+            <div id="steps">
+                <div class="step" id="step1">
+                    <i class="far fa-circle"></i> Export data from localStorage
                 </div>
-                <table id="batsmenTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>REG NO</th>
-                            <th>PLAYER NAME</th>
-                            <th>TEAM NAME</th>
-                            <th>AWARDS</th>
-                            <th>POINTS</th>
-                            <th class="rank-change-col">CHANGE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="batsmenBody">
-                        <!-- Filled by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- BEST BOWLER -->
-            <div class="section">
-                <h2><i class="fas fa-baseball-ball"></i> BEST BOWLER 2026</h2>
-                <div class="search-section">
-                    <input type="text" id="bowlerSearch" placeholder="Type here to search bowler..." onkeyup="searchBowlers()">
-                    <i class="fas fa-search search-icon"></i>
+                <div class="step" id="step2">
+                    <i class="far fa-circle"></i> Prepare for GitHub
                 </div>
-                <table id="bowlersTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>REG NO</th>
-                            <th>PLAYER NAME</th>
-                            <th>TEAM NAME</th>
-                            <th>AWARDS</th>
-                            <th>POINTS</th>
-                            <th class="rank-change-col">CHANGE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bowlersBody">
-                        <!-- Filled by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- BEST ALL ROUNDER -->
-            <div class="section">
-                <h2><i class="fas fa-star"></i> BEST ALL ROUNDER 2026</h2>
-                <div class="search-section">
-                    <input type="text" id="allrounderSearch" placeholder="Type here to search all rounder..." onkeyup="searchAllrounders()">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
-                <table id="allroundersTable">
-                    <thead>
-                        <tr>
-                            <th>RANK</th>
-                            <th>REG NO</th>
-                            <th>PLAYER NAME</th>
-                            <th>TEAM NAME</th>
-                            <th>AWARDS</th>
-                            <th>POINTS</th>
-                            <th class="rank-change-col">CHANGE</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allroundersBody">
-                        <!-- Filled by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Team Tournament History -->
-            <div class="section">
-                <h2><i class="fas fa-history"></i> TEAM TOURNAMENT HISTORY</h2>
-                <select id="teamSelect" onchange="showTeamWins()">
-                    <option value="">Select a Team</option>
-                </select>
-                
-                <div id="teamWinsDisplay" class="wins-display">
-                    <!-- Team wins will appear here -->
+                <div class="step" id="step3">
+                    <i class="far fa-circle"></i> Ready to publish
                 </div>
             </div>
 
-            <!-- Player Achievement History -->
-            <div class="section">
-                <h2><i class="fas fa-medal"></i> PLAYER ACHIEVEMENT HISTORY</h2>
-                <select id="playerSelect" onchange="showPlayerAchievements()">
-                    <option value="">Select a Player</option>
-                </select>
-                
-                <div id="playerAchievementsDisplay" class="wins-display">
-                    <!-- Player achievements will appear here -->
-                </div>
-            </div>
-        </div>
+            <button onclick="publishToGitHub()" class="publish-btn" id="publishBtn">
+                <i class="fas fa-globe"></i> Publish to Live Site
+            </button>
 
-        <!-- Follow Us Section -->
-        <div class="follow-us">
-            <h3>FOLLOW US</h3>
-            <div class="social-links">
-                <a href="#" id="facebookLinkDisplay" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-                <a href="#" id="instagramLinkDisplay" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#" id="youtubeLinkDisplay" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            <div id="status" class="status-box"></div>
+
+            <div style="margin-top: 20px;">
+                <a href="admin.html" class="back-btn" style="color: #667eea; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> Back to Admin Panel
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Public watermark -->
-    <div class="public-watermark">Public View - Data updates automatically</div>
-
-    <!-- Hidden file input for import (hidden from public) -->
-    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(event)">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script>
+        function publishToGitHub() {
+            // Show loading state
+            document.getElementById('publishBtn').disabled = true;
+            document.getElementById('publishBtn').innerHTML = '<span class="loading"></span> Publishing...';
+            
+            // Step 1: Export data from localStorage
+            document.getElementById('step1').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Exporting data...';
+            
+            try {
+                // Get data from localStorage
+                const savedData = localStorage.getItem('softballData');
+                if (!savedData) {
+                    throw new Error('No data found in localStorage');
+                }
+                
+                document.getElementById('step1').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Data exported successfully';
+                
+                // Step 2: Prepare for GitHub
+                document.getElementById('step2').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Preparing data...';
+                
+                // Parse and format the data
+                const data = JSON.parse(savedData);
+                
+                document.getElementById('step2').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Data prepared for GitHub';
+                
+                // Step 3: Create download file
+                document.getElementById('step3').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Creating backup file...';
+                
+                // Create a formatted JSON string
+                const jsonStr = JSON.stringify(data, null, 2);
+                
+                // Create download link for backup
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'softball_rankings_backup.json';
+                a.click();
+                
+                document.getElementById('step3').innerHTML = '<i class="fas fa-check-circle" style="color: #28a745;"></i> Backup file downloaded';
+                
+                // Show success message with instructions
+                const status = document.getElementById('status');
+                status.className = 'status-box success';
+                status.style.display = 'block';
+                status.innerHTML = `
+                    <strong>✅ Backup file downloaded!</strong><br><br>
+                    <strong>Next steps to update live site:</strong><br>
+                    1. Go to your GitHub repository:<br>
+                    <a href="https://github.com/Chamuditha99y/softball-rankings" target="_blank">https://github.com/Chamuditha99y/softball-rankings</a><br><br>
+                    2. Click on <strong>data.js</strong><br><br>
+                    3. Click the <strong>pencil icon</strong> (edit)<br><br>
+                    4. Replace the entire SoftballData object with your backup data<br><br>
+                    5. Scroll down and click <strong>"Commit changes"</strong><br><br>
+                    6. Wait 2-3 minutes for the live site to update<br><br>
+                    <a href="https://chamuditha99y.github.io/softball-rankings/public.html" target="_blank" style="color: #28a745;">Check live site after updating</a>
+                `;
+                
+                document.getElementById('publishBtn').disabled = false;
+                document.getElementById('publishBtn').innerHTML = '<i class="fas fa-globe"></i> Publish to Live Site';
+                
+            } catch (error) {
+                // Show error
+                const status = document.getElementById('status');
+                status.className = 'status-box error';
+                status.style.display = 'block';
+                status.innerHTML = `❌ Error: ${error.message}`;
+                
+                document.getElementById('publishBtn').disabled = false;
+                document.getElementById('publishBtn').innerHTML = '<i class="fas fa-globe"></i> Publish to Live Site';
+            }
+        }
+    </script>
 </body>
 </html>
