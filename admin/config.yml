@@ -10,6 +10,110 @@ collections:
     label: "Teams"
     folder: "_data/teams"
     create: true
+    format: json
+    identifier_field: "name"
+    fields:
+      - { label: "Team Name", name: "name", widget: "string" }
+      - { label: "Championships", name: "champs", widget: "number", value_type: "int", default: 0 }
+      - { label: "Runners Up", name: "runnersUp", widget: "number", value_type: "int", default: 0 }
+      - { label: "Cash Total", name: "cashTotal", widget: "number", value_type: "int", default: 0 }
+      - { label: "Points", name: "points", widget: "number", value_type: "int", default: 0 }
+      - { label: "Rank", name: "rank", widget: "number", value_type: "int", required: false, default: 1 }
+      - { label: "Previous Rank", name: "prevRank", widget: "number", value_type: "int", required: false, default: 1 }
+
+  - name: "players"
+    label: "Players"
+    folder: "_data/players"
+    create: true
+    format: json
+    identifier_field: "id"
+    fields:
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+
+  - name: "batsmen"
+    label: "Batsmen"
+    folder: "_data/batsmen"
+    create: true
+    format: json
+    identifier_field: "name"
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", value_type: "int", default: 0 }
+      - { label: "Points", name: "points", widget: "number", value_type: "int", default: 0 }
+      - { label: "Rank", name: "rank", widget: "number", value_type: "int", required: false, default: 1 }
+      - { label: "Previous Rank", name: "prevRank", widget: "number", value_type: "int", required: false, default: 1 }
+
+  - name: "bowlers"
+    label: "Bowlers"
+    folder: "_data/bowlers"
+    create: true
+    format: json
+    identifier_field: "name"
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", value_type: "int", default: 0 }
+      - { label: "Points", name: "points", widget: "number", value_type: "int", default: 0 }
+      - { label: "Rank", name: "rank", widget: "number", value_type: "int", required: false, default: 1 }
+      - { label: "Previous Rank", name: "prevRank", widget: "number", value_type: "int", required: false, default: 1 }
+
+  - name: "allrounders"
+    label: "All Rounders"
+    folder: "_data/allrounders"
+    create: true
+    format: json
+    identifier_field: "name"
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", value_type: "int", default: 0 }
+      - { label: "Points", name: "points", widget: "number", value_type: "int", default: 0 }
+      - { label: "Rank", name: "rank", widget: "number", value_type: "int", required: false, default: 1 }
+      - { label: "Previous Rank", name: "prevRank", widget: "number", value_type: "int", required: false, default: 1 }
+
+  - name: "teamWins"
+    label: "Team Tournament Wins"
+    folder: "_data/teamWins"
+    create: true
+    format: json
+    identifier_field: "tournament"
+    fields:
+      - { label: "Team Name", name: "team", widget: "string" }
+      - { label: "Tournament", name: "tournament", widget: "string" }
+      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Prize", name: "prize", widget: "string" }
+
+  - name: "achievements"
+    label: "Player Achievements"
+    folder: "_data/achievements"
+    create: true
+    format: json
+    identifier_field: "tournament"
+    fields:
+      - { label: "Player Name", name: "player", widget: "string" }
+      - { label: "Tournament", name: "tournament", widget: "string" }
+      - { label: "Date", name: "date", widget: "date" }
+      - { label: "Achievement", name: "achievement", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Batsman", "Bowler", "All Rounder"] }
+      - { label: "Team", name: "team", widget: "string" }backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "teams"
+    label: "Teams"
+    folder: "_data/teams"
+    create: true
     fields:
       - { label: "Team Name", name: "name", widget: "string" }
       - { label: "Championships", name: "champs", widget: "number" }
