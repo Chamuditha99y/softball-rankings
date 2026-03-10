@@ -12,6 +12,138 @@
         <div class="admin-header">
             <h1><i class="fas fa-cog"></i> ADMIN PANEL</h1>
             <div style="display: flex; gap: 10px;">
+                <!-- FIXED BUTTON - Now points to correct CMS login -->
+                <button onclick="window.location.href='https://lively-bienenstitch-9c5f56.netlify.app/admin/'" 
+                        class="cms-btn" 
+                        style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-pencil-alt"></i> Open CMS Editor
+                </button>
+                <button onclick="goToDashboard()" class="back-to-dashboard">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ffc107;">
+            <strong><i class="fas fa-exclamation-triangle"></i> IMPORTANT:</strong>
+            <p style="margin-top: 5px;">
+                The forms below ONLY save data to your browser. To update the LIVE site:<br><br>
+                1️⃣ Click the GREEN <strong>"Open CMS Editor"</strong> button above<br>
+                2️⃣ Log in with your email<br>
+                3️⃣ Add your data in the CMS<br>
+                4️⃣ Click <strong>"Publish"</strong><br>
+                5️⃣ Live site updates in 2-3 minutes!
+            </p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalTeams">0</div>
+                <div class="stat-label">Total Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalPlayers">0</div>
+                <div class="stat-label">Total Players</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalTournaments">0</div>
+                <div class="stat-label">Tournaments</div>
+            </div>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="openTab('teams')">Teams</button>
+            <button class="tab-btn" onclick="openTab('players')">Players DB</button>
+            <button class="tab-btn" onclick="openTab('batsmen')">Batsmen</button>
+            <button class="tab-btn" onclick="openTab('bowlers')">Bowlers</button>
+            <button class="tab-btn" onclick="openTab('allrounders')">All Rounders</button>
+            <button class="tab-btn" onclick="openTab('wins')">Team Wins</button>
+            <button class="tab-btn" onclick="openTab('achievements')">Achievements</button>
+            <button class="tab-btn" onclick="openTab('social')">Social</button>
+        </div>
+
+        <!-- Teams Tab (simplified - rest of your tabs remain same) -->
+        <div id="teamsTab" class="tab-content active">
+            <div class="admin-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3><i class="fas fa-users"></i> Manage Teams</h3>
+                    <button onclick="addNewTeam()" class="add-btn">
+                        <i class="fas fa-plus"></i> Add New Team
+                    </button>
+                </div>
+                
+                <!-- Team Form (existing form) -->
+                <div class="team-players-form" style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #333;">Add Team & Players</h4>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="newTeamName" class="admin-input" placeholder="Enter Team Name" style="font-weight: bold; border-color: #667eea;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label style="font-weight: bold; color: #333;">Add Players (15-20 players per team)</label>
+                            <button type="button" onclick="addPlayerRow()" class="add-btn-small" style="background: #17a2b8; padding: 5px 10px; border: none; border-radius: 4px; color: white; cursor: pointer;">
+                                <i class="fas fa-plus"></i> Add Another Player
+                            </button>
+                        </div>
+                        
+                        <div id="playersRowsContainer">
+                            <!-- Player rows will be added here by JavaScript -->
+                        </div>
+                        
+                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                            <i class="fas fa-info-circle"></i> Minimum 3 players required.
+                        </div>
+                    </div>
+                    
+                    <button onclick="addTeamAndPlayers()" class="add-btn" style="background: #28a745; width: 100%; padding: 12px; font-size: 16px;">
+                        <i class="fas fa-save"></i> Create Team with Players
+                    </button>
+                </div>
+
+                <!-- Teams List Table -->
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>TEAM NAME</th>
+                            <th>CHAMPS</th>
+                            <th>RUNNERS UP</th>
+                            <th>CASH TOTAL</th>
+                            <th>POINTS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teamsEditTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Other tabs remain the same - keep your existing code for Players DB, Batsmen, etc. -->
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Gampaha Softball</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1><i class="fas fa-cog"></i> ADMIN PANEL</h1>
+            <div style="display: flex; gap: 10px;">
                 <!-- FIXED: This button now points to the correct CMS login page -->
                 <button onclick="window.location.href='/admin/'" 
                         class="cms-btn" 
@@ -353,3 +485,4 @@
     <script src="admin.js"></script>
 </body>
 </html>
+
