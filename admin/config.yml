@@ -11,6 +11,71 @@ collections:
     folder: "_data/teams"
     create: true
     format: json
+    fields:
+      - { label: "Team Name", name: "name", widget: "string" }
+      - { label: "Championships", name: "champs", widget: "number", default: 0 }
+      - { label: "Runners Up", name: "runnersUp", widget: "number", default: 0 }
+      - { label: "Cash Total", name: "cashTotal", widget: "number", default: 0 }
+      - { label: "Points", name: "points", widget: "number", default: 0 }
+
+  - name: "players"
+    label: "Players"
+    folder: "_data/players"
+    create: true
+    format: json
+    fields:
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+
+  - name: "batsmen"
+    label: "Batsmen"
+    folder: "_data/batsmen"
+    create: true
+    format: json
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", default: 0 }
+      - { label: "Points", name: "points", widget: "number", default: 0 }
+
+  - name: "bowlers"
+    label: "Bowlers"
+    folder: "_data/bowlers"
+    create: true
+    format: json
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", default: 0 }
+      - { label: "Points", name: "points", widget: "number", default: 0 }
+
+  - name: "allrounders"
+    label: "All Rounders"
+    folder: "_data/allrounders"
+    create: true
+    format: json
+    fields:
+      - { label: "Reg No", name: "regNo", widget: "string" }
+      - { label: "Player Name", name: "name", widget: "string" }
+      - { label: "Team", name: "team", widget: "string" }
+      - { label: "Awards", name: "awards", widget: "number", default: 0 }
+      - { label: "Points", name: "points", widget: "number", default: 0 }backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "teams"
+    label: "Teams"
+    folder: "_data/teams"
+    create: true
+    format: json
     identifier_field: "name"
     fields:
       - { label: "Team Name", name: "name", widget: "string" }
