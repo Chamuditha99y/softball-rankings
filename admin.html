@@ -12,13 +12,31 @@
         <div class="admin-header">
             <h1><i class="fas fa-cog"></i> ADMIN PANEL</h1>
             <div style="display: flex; gap: 10px;">
-                <button onclick="window.location.href='publish.html'" class="publish-btn" style="background: #ffc107; color: black; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                    <i class="fas fa-cloud-upload-alt"></i> Publish to Live
+                <!-- NEW: CMS Editor Button - This is where your friend will update content -->
+                <button onclick="window.location.href='https://lively-bienenstitch-9c5f56.netlify.app/admin'" 
+                        class="cms-btn" 
+                        style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-pencil-alt"></i> Open CMS Editor
                 </button>
+                
+                <!-- Back to Dashboard Button -->
                 <button onclick="goToDashboard()" class="back-to-dashboard">
                     <i class="fas fa-arrow-left"></i> Back to Dashboard
                 </button>
             </div>
+        </div>
+
+        <!-- Important Notice for Admin User -->
+        <div style="background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #17a2b8;">
+            <strong><i class="fas fa-info-circle"></i> IMPORTANT UPDATE:</strong>
+            <p style="margin-top: 5px;">
+                You no longer need to use the old "Publish" button. <br><br>
+                <strong>New workflow:</strong><br>
+                1️⃣ Click the green <strong>"Open CMS Editor"</strong> button above<br>
+                2️⃣ Log in with your email<br>
+                3️⃣ Make your changes in the simple editor<br>
+                4️⃣ Click <strong>"Publish"</strong> — the live site updates automatically in 2-3 minutes! 🚀
+            </p>
         </div>
 
         <!-- Quick Stats -->
@@ -59,7 +77,7 @@
                     </button>
                 </div>
                 
-                <!-- Team & Multiple Players Form - FIXED: Now with 2 columns (Reg No + Name only) -->
+                <!-- Team & Multiple Players Form -->
                 <div class="team-players-form" style="background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                     <h4 style="margin-bottom: 15px; color: #333;">Add Team & Players</h4>
                     
@@ -77,7 +95,7 @@
                             </button>
                         </div>
                         
-                        <!-- Player Rows Container - 2 columns (Reg No + Name only) -->
+                        <!-- Player Rows Container -->
                         <div id="playersRowsContainer">
                             <!-- Row 0 -->
                             <div class="player-row" style="display: grid; grid-template-columns: 100px 1fr 100px; gap: 10px; margin-bottom: 10px; align-items: center;">
