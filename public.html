@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gampaha District Softball Rankings 2026 - Public View</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Hide all admin and action buttons */
+        .top-buttons, #adminLoginBtn, #downloadBtn, .backup-btn, .restore-btn,
+        button.add-btn, button.delete-btn, button.save-btn, button.cancel-btn,
+        .admin-header, .quick-stats, .admin-tabs, .team-players-form,
+        #importFile, [onclick*="add"], [onclick*="delete"], [onclick*="save"],
+        .admin-section button:not(.social-links a) {
+            display: none !important;
+        }
+        
+        /* Hide any potential admin-only sections */
+        .admin-only {
+            display: none !important;
+        }
+        
+        /* Optional: Add watermark for public view */
+        .public-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.3;
+            font-size: 12px;
+            color: #666;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        /* Make sure tables and public content are visible */
+        .section, table, .search-section, select, .wins-display,
+        .follow-us, .social-links {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 POINT SYSTEM RANKING 2026</h1>
+            <h2>🇱🇰 GAMPAHA DISTRICT</h2>
+        </div>
+        
+        <!-- Public View Only - No Admin Buttons -->
+        
+        <!-- Main Dashboard -->
+        <div id="publicDashboard" class="dashboard">
+            <!-- TOP 10 TEAMS -->
+            <div class="section">
+                <h2><i class="fas fa-trophy"></i> TOP 10 TEAMS</h2>
+                <div class="search-section">
+                    <input type="text" id="teamSearch" placeholder="Type here to search team..." onkeyup="searchTeams()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="rankingsTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>TEAM NAME</th>
+                            <th>CHAMPS</th>
+                            <th>RUNNERS UP</th>
+                            <th>CASH TOTAL</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingsBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST BATSMAN -->
+            <div class="section">
+                <h2><i class="fas fa-baseball-bat-ball"></i> BEST BATSMAN 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="batsmanSearch" placeholder="Type here to search batsman..." onkeyup="searchBatsmen()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="batsmenTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batsmenBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST BOWLER -->
+            <div class="section">
+                <h2><i class="fas fa-baseball-ball"></i> BEST BOWLER 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="bowlerSearch" placeholder="Type here to search bowler..." onkeyup="searchBowlers()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="bowlersTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bowlersBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST ALL ROUNDER -->
+            <div class="section">
+                <h2><i class="fas fa-star"></i> BEST ALL ROUNDER 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="allrounderSearch" placeholder="Type here to search all rounder..." onkeyup="searchAllrounders()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="allroundersTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allroundersBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Team Tournament History -->
+            <div class="section">
+                <h2><i class="fas fa-history"></i> TEAM TOURNAMENT HISTORY</h2>
+                <select id="teamSelect" onchange="showTeamWins()">
+                    <option value="">Select a Team</option>
+                </select>
+                
+                <div id="teamWinsDisplay" class="wins-display">
+                    <!-- Team wins will appear here -->
+                </div>
+            </div>
+
+            <!-- Player Achievement History -->
+            <div class="section">
+                <h2><i class="fas fa-medal"></i> PLAYER ACHIEVEMENT HISTORY</h2>
+                <select id="playerSelect" onchange="showPlayerAchievements()">
+                    <option value="">Select a Player</option>
+                </select>
+                
+                <div id="playerAchievementsDisplay" class="wins-display">
+                    <!-- Player achievements will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow Us Section -->
+        <div class="follow-us">
+            <h3>FOLLOW US</h3>
+            <div class="social-links">
+                <a href="#" id="facebookLinkDisplay" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" id="instagramLinkDisplay" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" id="youtubeLinkDisplay" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Public watermark -->
+    <div class="public-watermark">Public View - Data updates automatically</div>
+
+    <!-- Scripts (same as before) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
