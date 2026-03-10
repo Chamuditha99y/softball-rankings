@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gampaha District Softball Rankings 2026 - Public View</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Try to load external style.css (will use internal if fails) -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- INTERNAL CSS BACKUP - This ensures good styling even if style.css fails -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            font-size: 1.8em;
+            font-weight: normal;
+        }
+
+        /* Hide all admin and action buttons */
+        .top-buttons, #adminLoginBtn, #downloadBtn, .backup-btn, .restore-btn,
+        button.add-btn, button.delete-btn, button.save-btn, button.cancel-btn,
+        .admin-header, .quick-stats, .admin-tabs, .team-players-form,
+        #importFile, [onclick*="add"], [onclick*="delete"], [onclick*="save"],
+        .admin-section button:not(.social-links a) {
+            display: none !important;
+        }
+
+        /* Search Section */
+        .search-section {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-section input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-section input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+        }
+
+        .search-section .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-gap: 30px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-change-col {
+            width: 80px;
+            text-align: center;
+        }
+
+        .rank-up {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .rank-down {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .rank-same {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        /* Rank colors */
+        tr:nth-child(1) td:first-child {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        tr:nth-child(2) td:first-child {
+            color: #c0c0c0;
+            font-weight: bold;
+        }
+
+        tr:nth-child(3) td:first-child {
+            color: #cd7f32;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .wins-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .win-item, .achievement-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s;
+        }
+
+        .win-item strong, .achievement-item strong {
+            color: #2196F3;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .win-item i, .achievement-item i {
+            color: #ffc107;
+            margin-right: 8px;
+            width: 20px;
+        }
+
+        .achievement-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .achievement-badge.batsman {
+            background: #28a745;
+            color: white;
+        }
+
+        .achievement-badge.bowler {
+            background: #dc3545;
+            color: white;
+        }
+
+        .achievement-badge.allrounder {
+            background: #ffc107;
+            color: black;
+        }
+
+        /* Follow Us Section */
+        .follow-us {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .follow-us h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.2em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            color: #ffd700;
+        }
+
+        .social-links i {
+            font-size: 1.5em;
+        }
+
+        /* Public watermark */
+        .public-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.3;
+            font-size: 12px;
+            color: #666;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header h2 {
+                font-size: 1.3em;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px 5px;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .social-links a {
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 10px;
+            }
+            
+            .follow-us,
+            select,
+            .search-section {
+                display: none !important;
+            }
+            
+            th {
+                background: #f0f0f0 !important;
+                color: black !important;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Empty State Styles */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 POINT SYSTEM RANKING 2026</h1>
+            <h2>🇱🇰 GAMPAHA DISTRICT</h2>
+        </div>
+        
+        <!-- Main Dashboard -->
+        <div id="publicDashboard" class="dashboard">
+            <!-- TOP 10 TEAMS -->
+            <div class="section">
+                <h2><i class="fas fa-trophy"></i> TOP 10 TEAMS</h2>
+                <div class="search-section">
+                    <input type="text" id="teamSearch" placeholder="Type here to search team..." onkeyup="searchTeams()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="rankingsTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>TEAM NAME</th>
+                            <th>CHAMPS</th>
+                            <th>RUNNERS UP</th>
+                            <th>CASH TOTAL</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingsBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST BATSMAN -->
+            <div class="section">
+                <h2><i class="fas fa-baseball-bat-ball"></i> BEST BATSMAN 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="batsmanSearch" placeholder="Type here to search batsman..." onkeyup="searchBatsmen()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="batsmenTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="batsmenBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST BOWLER -->
+            <div class="section">
+                <h2><i class="fas fa-baseball-ball"></i> BEST BOWLER 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="bowlerSearch" placeholder="Type here to search bowler..." onkeyup="searchBowlers()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="bowlersTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bowlersBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- BEST ALL ROUNDER -->
+            <div class="section">
+                <h2><i class="fas fa-star"></i> BEST ALL ROUNDER 2026</h2>
+                <div class="search-section">
+                    <input type="text" id="allrounderSearch" placeholder="Type here to search all rounder..." onkeyup="searchAllrounders()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <table id="allroundersTable">
+                    <thead>
+                        <tr>
+                            <th>RANK</th>
+                            <th>REG NO</th>
+                            <th>PLAYER NAME</th>
+                            <th>TEAM NAME</th>
+                            <th>AWARDS</th>
+                            <th>POINTS</th>
+                            <th class="rank-change-col">CHANGE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allroundersBody">
+                        <!-- Filled by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Team Tournament History -->
+            <div class="section">
+                <h2><i class="fas fa-history"></i> TEAM TOURNAMENT HISTORY</h2>
+                <select id="teamSelect" onchange="showTeamWins()">
+                    <option value="">Select a Team</option>
+                </select>
+                
+                <div id="teamWinsDisplay" class="wins-display">
+                    <!-- Team wins will appear here -->
+                </div>
+            </div>
+
+            <!-- Player Achievement History -->
+            <div class="section">
+                <h2><i class="fas fa-medal"></i> PLAYER ACHIEVEMENT HISTORY</h2>
+                <select id="playerSelect" onchange="showPlayerAchievements()">
+                    <option value="">Select a Player</option>
+                </select>
+                
+                <div id="playerAchievementsDisplay" class="wins-display">
+                    <!-- Player achievements will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow Us Section -->
+        <div class="follow-us">
+            <h3>FOLLOW US</h3>
+            <div class="social-links">
+                <a href="#" id="facebookLinkDisplay" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" id="instagramLinkDisplay" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" id="youtubeLinkDisplay" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Public watermark -->
+    <div class="public-watermark">Public View - Data updates automatically</div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
